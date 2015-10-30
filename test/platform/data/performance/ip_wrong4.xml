@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+       测试ip地址配置错误
+  -->
+<Configuration>
+    <!--NOTE，在不同平台下运行时，请更改DeviceId -->
+    <Property Name="DeviceId" Value="1" Description="根据不同的平台，选用不同的id，id号见各自的Configuration定义"></Property>
+
+    <Property Name="StationName" Value="bzz" Description="站场名称，用以识别站场配置文件"></Property>
+    <Property Name="LocalLogFileName" Value="log" Description="本地日志记录文件的名称前缀"></Property>
+    <Property Name="HMIIp" Value="192.168.1.100" Description="控显机ip地址"></Property>
+    <Property Name="HMIListenPort" Value="3000" Description="控显机通信端口"></Property>
+    
+
+    <!--Configuration可以再包含一个Configuration，子Configuration会继承父Configuration的属性-->
+    <Configuration>
+        <!--在linux平台下的相关配置-->
+        <Configuration>
+            <Property Name="RemoteLogServerIp" Value="192.168.1.100" Description="远程日志记录服务器的ip地址"></Property>
+            <Property Name="RemoteLogServerPort" Value="3003" Description="远程日志记录服务器的通信端口"></Property>
+            <Property Name="PerformanceServerIP" Value="192.168.1.100ss" Description="性能检测软件的通信IP"></Property>
+            <Property Name="PerformanceServerPort" Value="3004" Description="性能检测软件的通信端口"></Property>
+
+            <Property Name="AuxSwitchInputPort" Value="5002" Description="双系辅助切换网络输入数据通道的端口"></Property>
+            <Property Name="AuxSwitchCfgPort" Value="5003" Description="双系辅助切换网络配置比较通道的端口"></Property>
+            <Property Name="EthernetName" Value="eth0" Description="本程序通讯所使用的网卡的名称"></Property>
+
+            <!--I系配置-->
+            <Configuration>
+                <Property Name="LINUX_AUX" Value="I" Description="该项用以在linux下辅助识别另外一系的配置"/>
+                <Property Name="Series" Value="I" Description="双系状态，是I系还是II系"></Property>
+                <Property Name="PeerSeriesMasterIp" Value="192.168.1.202" Description="另外一系的主CPU地址，用以双系辅助切换"></Property>
+                <Property Name="PeerSeriesSlaveIp" Value="192.168.1.203" Description="另外一系的从CPU地址，用以双系辅助切换"></Property>
+                <!--I系主CPU配置-->
+                <Configuration id="1">
+                    <Property Name="CpuState" Value="master" Description="双CPU状态，是主CPU还是从CPU"></Property>
+                </Configuration>
+                <!--I系从CPU配置-->
+                <Configuration id="2">
+                    <Property Name="CpuState" Value="slave" Description="双CPU状态，是主CPU还是从CPU"></Property>
+                </Configuration>
+            </Configuration>
+            <!--II系配置-->
+            <Configuration>
+                <Property Name="LINUX_AUX" Value="II" Description="该项用以在linux下辅助识别另外一系的配置"/>
+                <Property Name="Series" Value="II" Description="双系状态，是I系还是II系"></Property>
+                <Property Name="PeerSeriesMasterIp" Value="192.168.1.200" Description="另外一系的主CPU地址，用以双系辅助切换"></Property>
+                <Property Name="PeerSeriesSlaveIp" Value="192.168.1.201" Description="另外一系的从CPU地址，用以双系辅助切换"></Property>
+                <!--II系主CPU配置-->
+                <Configuration id="3">
+                    <Property Name="CpuState" Value="master" Description="双CPU状态，是主CPU还是从CPU"></Property>
+                </Configuration>
+                <!--II系从CPU配置-->
+                <Configuration id="4">
+                    <Property Name="CpuState" Value="slave" Description="双CPU状态，是主CPU还是从CPU"></Property>
+                </Configuration>
+            </Configuration>
+        </Configuration>
+
+        <!--在windows平台下的配置-->
+        <Configuration id="5">
+            <Property Name="Series" Value="I" Description="双系状态，是I系还是II系"></Property>
+            <Property Name="CpuState" Value="master" Description="双CPU状态，是主CPU还是从CPU"></Property>
+
+            <!--联锁程序会使用这两个端口分别接收控显机和模拟的通信数据-->
+            
+            <Property Name="CiLocalhostIp" Value="127.0.0.1" Description="本地ip地址"></Property>
+            <Property Name="CiListenPort" Value="3001" Description="使用网口与控显机通信的端口"></Property>
+            <Property Name="CiSimulatorListenPort" Value="3002" Description="联锁程序当中会监听这一端口，从而接收模拟机的数据"></Property>
+
+            <!--模拟机的地址-->
+            <Property Name="SimulatorServerIp" Value="127.0.0.1" Description="模拟机的地址，模拟机可以与联锁机在一个机器上也可以在不同机器上"></Property>
+            <Property Name="SimulatorServerListenPort" Value="3003" Description="模拟机的监听端口"></Property>
+        </Configuration>
+    </Configuration>
+</Configuration>
